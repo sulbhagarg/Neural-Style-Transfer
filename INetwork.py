@@ -1,6 +1,6 @@
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
+from _future_ import print_function
+from _future_ import division
+from _future_ import absolute_import
 
 # from scipy.misc import imread, imresize, imsave, fromimage, toimage
 from utils import imread, imresize, imsave, fromimage, toimage
@@ -11,13 +11,12 @@ import time
 import argparse
 import warnings
 
-import tensorflow as tf
-from keras.models import Model
-from keras.layers import Input
-from keras.layers.convolutional import Convolution2D, AveragePooling2D, MaxPooling2D
-from keras import backend as K
-from keras.utils.data_utils import get_file
-from keras.utils.layer_utils import convert_all_kernels_in_model
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers.convolutional import Convolution2D, AveragePooling2D, MaxPooling2D
+from tensorflow.keras import backend as K
+from tensorflow.keras.utils.data_utils import get_file
+from tensorflow.keras.utils.layer_utils import convert_all_kernels_in_model
 
 """
 Neural Style Transfer with Keras 2.0.5
@@ -431,7 +430,7 @@ def style_loss(style, combination, mask_path=None, nb_channels=None):
     C = gram_matrix(combination)
     channels = 3
     size = img_width * img_height
-    return K.sum(K.square(S - C)) / (4. * (channels ** 2) * (size ** 2))
+    return K.sum(K.square(S - C)) / (4. * (channels * 2) * (size * 2))
 
 
 # an auxiliary loss function
@@ -447,7 +446,7 @@ def content_loss(base, combination):
     size = img_width * img_height
 
     if args.content_loss_type == 1:
-        multiplier = 1. / (2. * (channels ** 0.5) * (size ** 0.5))
+        multiplier = 1. / (2. * (channels * 0.5) * (size * 0.5))
     elif args.content_loss_type == 2:
         multiplier = 1. / (channels * size)
     else:
@@ -522,7 +521,7 @@ for i in range(len(feature_layers) - 1):
 loss = loss + total_variation_weight * total_variation_loss(combination_image)
 
 # get the gradients of the generated image wrt the loss
-grads = tf.GradientTape(loss, combination_image)
+grads = K.GradientTape(loss, combination_image)
 
 outputs = [loss]
 if type(grads) in {list, tuple}:
@@ -554,7 +553,7 @@ def eval_loss_and_grads(x):
 # requires separate functions for loss and gradients,
 # but computing them separately would be inefficient.
 class Evaluator(object):
-    def __init__(self):
+    def _init_(self):
         self.loss_value = None
         self.grads_values = None
 
@@ -640,7 +639,7 @@ for i in range(num_iter):
         print("Rescaling Image to (%d, %d)" % (img_WIDTH, img_HEIGHT))
         img = imresize(img, (img_WIDTH, img_HEIGHT), interp=args.rescale_method)
 
-    fname = result_prefix + "_at_iteration_%d.png" % (i + 1)
+    fname = result_prefix + "at_iteration%d.png" % (i + 1)
     imsave(fname, img)
     end_time = time.time()
     print("Image saved as", fname)
