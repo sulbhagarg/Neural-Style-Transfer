@@ -529,7 +529,7 @@ if type(grads) in {list, tuple}:
 else:
     outputs.append(grads)
 
-f_outputs = tf.function(combination_image, outputs)
+f_outputs = K.function([combination_image], outputs)
 
 
 def eval_loss_and_grads(x):
