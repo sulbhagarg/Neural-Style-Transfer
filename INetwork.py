@@ -10,6 +10,7 @@ import numpy as np
 import time
 import argparse
 import warnings
+import tensorflow as tf
 
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, AveragePooling2D, MaxPooling2D
@@ -520,7 +521,7 @@ for i in range(len(feature_layers) - 1):
 loss = loss + total_variation_weight * total_variation_loss(combination_image)
 
 # get the gradients of the generated image wrt the loss
-grads = K.GradientTape(loss, combination_image)
+grads = tf.GradientTape(loss, combination_image)
 
 outputs = [loss]
 if type(grads) in {list, tuple}:
