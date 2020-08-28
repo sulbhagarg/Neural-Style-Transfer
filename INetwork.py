@@ -1,6 +1,6 @@
-from _future_ import print_function
-from _future_ import division
-from _future_ import absolute_import
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
 # from scipy.misc import imread, imresize, imsave, fromimage, toimage
 from utils import imread, imresize, imsave, fromimage, toimage
